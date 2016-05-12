@@ -147,10 +147,12 @@ class Car2D {
     }
 
     public Update(dt: number) {
-        const num1 = Math.sin(this.Angle);
-        const num2 = Math.cos(this.Angle);
-        this.VelocityLocal.x = (num2 * this.VelocityWorld.y + num1 * this.VelocityWorld.x);
-        this.VelocityLocal.y = (- num1 * this.VelocityWorld.y + num2 * this.VelocityWorld.x);
+        const sin = Math.sin(this.Angle);
+        const cos = Math.cos(this.Angle);
+        this.VelocityLocal.x = (cos * this.VelocityWorld.y + sin * this.VelocityWorld.x);
+        this.VelocityLocal.y = (- sin * this.VelocityWorld.y + cos * this.VelocityWorld.x);
+        
+        
         let num3 = 0.0;
         let num4 = 0.0;
         let num5 = this.WheelBase * 0.5 * this.AngularVelocity;
@@ -213,8 +215,10 @@ class Car2D {
         //this.AccelerationLocal = zero5 / this.Mass;
         this.AccelerationLocal = zero5.divideScalar(this.Mass);
         let num16 = num15 / this.Inertia;
-        this.AccelerationWorld.x = (num2 * this.AccelerationLocal.y + num1 * this.AccelerationLocal.x);
-        this.AccelerationWorld.y = (- num1 * this.AccelerationLocal.y + num2 * this.AccelerationLocal.x);
+        this.AccelerationWorld.x = (cos * this.AccelerationLocal.y + sin * this.AccelerationLocal.x);
+        this.AccelerationWorld.y = (- sin * this.AccelerationLocal.y + cos * this.AccelerationLocal.x);
+        
+        
         //this.VelocityWorld += this.AccelerationWorld * dt;
         this.VelocityWorld.addScaledVector(this.AccelerationWorld, dt);
         this.AngularVelocity += num16 * dt;

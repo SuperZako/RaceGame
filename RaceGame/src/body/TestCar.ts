@@ -9,7 +9,7 @@ function getAngleByRotation(rot: number) {
 
 
 class TestCar extends Formula1Car2D {
-   
+
     _group: THREE.Object3D = null;
     _meshBody: THREE.Mesh = null;
     _meshBody2: THREE.Mesh = null;
@@ -18,8 +18,13 @@ class TestCar extends Formula1Car2D {
     _meshWheelBackLeft: THREE.Mesh = null;
     _meshWheelBackRight: THREE.Mesh = null;
 
-    constructor(scene: THREE.Scene) {
+    
+
+    constructor(scene: THREE.Scene, private track: Track) {
         super();
+
+        track.setSegmentIndex(this);
+
 
         // 車
         this._group = new THREE.Object3D();
@@ -69,12 +74,19 @@ class TestCar extends Formula1Car2D {
         this._group.add(this._meshWheelBackRight);
     }
 
+
     public getPosition() {
         return new THREE.Vector3(-this.Position.x, 0, -this.Position.y);
     }
 
     public Update(dt: number) {
         super.Update(dt);
+
+
+        document.getElementById('info').innerHTML = "angle:" + this.Angle;
+
+
+        this.track.adjustPosition(this);
 
         this._group.position.set(-this.Position.x, 0, -this.Position.y);
         this._group.rotation.set(0, this.Angle, 0);

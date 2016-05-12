@@ -1,4 +1,5 @@
 ﻿/// <reference path="src/body/TestCar.ts"/>
+/// <reference path="src/track/TestTrack.ts"/>
 /// <reference path="src/ChaseCamera.ts"/>
 
 
@@ -24,25 +25,33 @@ scene.add(_ambient);
 //シーンオブジェクトに追加
 scene.add(grid);
 
-var testCar = new TestCar(scene);
+
+let testTrack = new TestTrack(scene);
+var testCar = new TestCar(scene, testTrack);
+
+
 var chaseCamera = new ChaseCamera(testCar._group, new THREE.Vector3(0, 5, 10));//new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); // Define the perspective camera's attributes.
 
 // スポットライト
-let _spot = new THREE.SpotLight(0xFFFFFF, 1, 1000, Math.PI / 1, 20);
-_spot.position.set(0, 200, 0);
+let _spot = new THREE.SpotLight(0xFFFFFF, 10, 3000, Math.PI / 1, 20);
+_spot.position.set(0, 2000, 0);
 _spot.castShadow = true;
 _spot.target = testCar._group;
 //if (IS_DEBUG_MODE) _spot.shadowCameraVisible = true;
 scene.add(_spot);
+
+
 
 let render = () => {
     //controls.update();
     requestAnimationFrame(render); // Call the render() function up to 60 times per second (i.e., up to 60 animation frames per second).
 
     var delta = clock.getDelta();
-    
+
     testCar.Update(delta);
     chaseCamera.Update(delta);
+
+
 
     renderer.render(scene, chaseCamera.camera); // Each time we change the position of the cube object, we must re-render it.
 

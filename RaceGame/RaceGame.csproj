@@ -44,6 +44,7 @@
     <TypeScriptCompile Include="src\track\Straight.ts" />
     <TypeScriptCompile Include="src\track\TestTrack.ts" />
     <TypeScriptCompile Include="src\track\Track.ts" />
+    <TypeScriptCompile Include="src\track\Turn.ts" />
     <TypeScriptCompile Include="typings\three-orbitcontrols.d.ts" />
     <TypeScriptCompile Include="typings\three.d.ts" />
     <TypeScriptCompile Include="typings\tween.d.ts" />

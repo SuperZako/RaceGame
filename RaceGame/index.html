@@ -7,7 +7,7 @@
     <style>
         body {
             text-align: center;
-              margin: 0;
+            margin: 0;
         }
 
         canvas {
@@ -15,10 +15,21 @@
             height: 100%;
             border: 1px solid black;
         }
+
+        #info {
+            position: absolute;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
+    <div id="info">
+        Simple Cloth Simulation<br>
+        Verlet integration with Constrains relaxation<br>
+    </div>
     <script src="./lib/three/three.min.js"></script> <!-- Get the latest version of the Three.js library. -->
     <script src="./lib/three/OrbitControls.js"></script>
     <script src="./build/out.js"></script> <!-- Get the latest version of the Three.js library. -->

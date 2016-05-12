@@ -2,8 +2,11 @@
 
 namespace MathHelper {
 
+
     export const Pi = 3.141592653589793238463;
+    export const PiOver2 = Pi / 2;
     export const TwoPi = 2 * Pi;
+
     export function Sign(value: number) {
         return value >= 0 ? 1 : -1;
     }
