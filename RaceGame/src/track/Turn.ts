@@ -43,6 +43,9 @@ class Turn extends RoadSegment {
         param.rotateX(-MathHelper.Pi / 2);
 
         scene.add(param);
+
+        let v = this.getWorldCoordinate(radius, endAngle);
+        RoadSegment.end.set(v.x, v.y);
     }
 
 
@@ -60,6 +63,9 @@ class Turn extends RoadSegment {
         let r = Math.sqrt(dx * dx + dy * dy);
         let theta = Math.atan2(dy, dx);
 
+        if (theta < 0)
+            theta += MathHelper.TwoPi;
+
         if (this.endAngle > theta && theta >= this.startAngle)
             return { r, theta };
         else
@@ -70,21 +76,20 @@ class Turn extends RoadSegment {
 
         let v = this.getTrackCoordinate(-car.Position.x, car.Position.y);
 
-        console.log("r:" + v.r + " theta:" + v.theta);
-
+        
 
         let radius = this.radius;
         if (v.r > radius + this.width / 2) {
             v.r = radius + this.width / 2;
             car.VelocityWorld.multiplyScalar(0.9);
 
-            car.Angle = v.theta;// + MathHelper.PiOver2;
+            car.Angle = v.theta + 0.2;
         }
         if (v.r < radius - this.width / 2) {
             v.r = radius - this.width / 2;
             car.VelocityWorld.multiplyScalar(0.9);
 
-            car.Angle = v.theta;// + MathHelper.PiOver2;
+            car.Angle = v.theta;
         }
 
 

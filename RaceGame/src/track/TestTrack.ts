@@ -6,9 +6,11 @@
 class TestTrack extends Track {
     constructor(scene: THREE.Scene) {
         super();
-        this.addSegment(new Straight(scene, 200, 40, MathHelper.Pi / 8));
-        this.addSegment(new Straight(scene, 200, 40, -MathHelper.Pi / 8));
-        this.addSegment(new Turn(scene, 0, MathHelper.Pi / 2, 100, 40));
+        this.addSegment(new Straight(scene, 400, 40, 0));
+        //this.addSegment(new Straight(scene, 200, 40, -MathHelper.Pi / 8));
+        this.addSegment(new Turn(scene, 0, MathHelper.Pi, 100, 40));
+        this.addSegment(new Straight(scene, 400, 40, MathHelper.Pi));
+        this.addSegment(new Turn(scene, MathHelper.Pi, MathHelper.TwoPi, 100, 40));
     }
 
     public setSegmentIndex(car: Car2D) {
@@ -26,8 +28,12 @@ class TestTrack extends Track {
 
     public adjustPosition(car: Car2D) {
         let segments = this.segments;
-        if (this.segmentIndex - 1 > 0) {
-            let index = this.segmentIndex - 1;
+        {
+            if (this.segmentIndex - 1 > 0)
+                var index = this.segmentIndex - 1;
+            else
+                var index = segments.length - 1;
+
             let segment = segments[index];
             let v = segment.getTrackCoordinate(-car.Position.x, car.Position.y);
             if (v !== null) {
@@ -43,15 +49,20 @@ class TestTrack extends Track {
             let v = segment.getTrackCoordinate(-car.Position.x, car.Position.y);
             if (v !== null) {
                 segment.adjustPosition(car);
+                document.getElementById('info').innerHTML = "segmentIndex:" + index;
                 this.segmentIndex = index;
                 return;
             }
         }
-       
 
 
-        if (this.segmentIndex + 1 < this.segments.length) {
-            let index = this.segmentIndex + 1;
+
+        {
+            if (this.segmentIndex + 1 < this.segments.length)
+                var index = this.segmentIndex + 1;
+            else
+                var index = 0;
+
             let segment = segments[index];
             let v = segment.getTrackCoordinate(-car.Position.x, car.Position.y);
             if (v !== null) {

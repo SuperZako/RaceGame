@@ -74,10 +74,10 @@ class Car2D {
     }
 
 
-    private _IsFrontSlipping: boolean;
+    private _IsFrontSlipping = false;
     get IsFrontSlipping() { return this._IsFrontSlipping; }
 
-    private _IsRearSlipping: boolean;
+    private _IsRearSlipping = false;
     get IsRearSlipping() { return this._IsRearSlipping; }
 
     private _ForceWheelSpin = 0;
@@ -202,7 +202,7 @@ class Car2D {
         zero3.y = MathHelper.Clamp(num14, -this.MaxGripRear, this.MaxGripRear);
         this.IsRearSlipping = num14 < -  this.MaxGripRear || num14 > this.MaxGripRear;
         zero3.y *= num10;
-        if (this.IsFrontSlipping || this.IsFrontSlipping)
+        if (this.IsFrontSlipping || /*this.IsFrontSlipping*/this.IsRearSlipping)
             this.ForceWheelSpin = 0.0;
         zero1.x -= this.ForceWheelSpin;
         let zero4 = new THREE.Vector2();//Vector2.Zero;
@@ -223,6 +223,7 @@ class Car2D {
         this.VelocityWorld.addScaledVector(this.AccelerationWorld, dt);
         this.AngularVelocity += num16 * dt;
         this.Angle += this.AngularVelocity * dt;
+
         //this.Position += this.VelocityWorld * dt;
         this.Position.addScaledVector(this.VelocityWorld, dt);
     }

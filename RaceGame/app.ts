@@ -56,11 +56,12 @@ let render = () => {
     renderer.render(scene, chaseCamera.camera); // Each time we change the position of the cube object, we must re-render it.
 
     if (left) {
-        testCar.SteerAngle = Math.min(testCar.SteerAngle + 0.014, +0.4);
+        testCar.SteerAngle = Math.min(testCar.SteerAngle + 0.014 , +0.4);
     } else if (right) {
-        testCar.SteerAngle = Math.max(testCar.SteerAngle - 0.014, -0.4);
+        testCar.SteerAngle = Math.max(testCar.SteerAngle - 0.014 , -0.4);
+    } else {
+        testCar.SteerAngle *= 0.5;//0.9;
     }
-    testCar.SteerAngle *= 0.9;
 };
 
 render(); // Start the rendering of the animation frames.
@@ -71,9 +72,10 @@ document.onkeydown = function (e) {
     e.preventDefault();
     switch (e.keyCode) {
         case 32:
+            //testCar.Brake = 2;
             return false;
         case 38:
-            testCar.Throttle = 1;
+            testCar.Throttle = 0.1;//1;
             return false;
         case 40:
             testCar.Brake = 1;
@@ -95,6 +97,7 @@ document.onkeyup = function (e) {
     e.preventDefault();
     switch (e.keyCode) {
         case 32:
+            //testCar.Brake = 0;
             return false;
         case 38:
             testCar.Throttle = 0;

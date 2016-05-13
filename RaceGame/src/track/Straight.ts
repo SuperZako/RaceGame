@@ -6,7 +6,12 @@ class Straight extends RoadSegment {
     private x0: number;
     private y0: number;
 
-    constructor(scene: THREE.Scene, private distance: number, private width: number, private angle: number) {
+    constructor(
+        scene: THREE.Scene,
+        private distance: number,
+        private width: number,
+        private angle: number,
+        private tolerance = 2.0) {
         super();
 
         this.x0 = RoadSegment.end.x;
@@ -78,7 +83,7 @@ class Straight extends RoadSegment {
         let fromCenter = (x - x0) * Math.cos(angle) + (y - y0) * Math.sin(angle);
         let distance = -(x - x0) * Math.sin(angle) + (y - y0) * Math.cos(angle);
 
-        if (this.distance > distance && distance >= 0)
+        if (this.distance > distance && distance >= 0 && (Math.abs(fromCenter) - this.width/2) < this.tolerance)
             return { distance, fromCenter };
         else
             return null;
@@ -95,7 +100,7 @@ class Straight extends RoadSegment {
 
             car.VelocityWorld.multiplyScalar(0.7);
             if (-MathHelper.PiOver2 <= angle && angle <= MathHelper.PiOver2) {
-                car.Angle = this.angle;
+                car.Angle = this.angle + 0.1;
             } else {
             }
         }

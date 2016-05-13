@@ -83,8 +83,6 @@ class TestCar extends Formula1Car2D {
         super.Update(dt);
 
 
-        document.getElementById('info').innerHTML = "angle:" + this.Angle;
-
 
         this.track.adjustPosition(this);
 

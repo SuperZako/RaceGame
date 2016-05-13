@@ -35,10 +35,8 @@
     <TypeScriptCompile Include="src\body\Formula1Car2D.ts" />
     <TypeScriptCompile Include="src\body\TestCar.ts" />
     <TypeScriptCompile Include="src\ChaseCamera.ts" />
-    <TypeScriptCompile Include="src\geometry\Interpolator.ts" />
-    <TypeScriptCompile Include="src\geometry\LinearInterpolator.ts" />
+    <TypeScriptCompile Include="src\geometry\BSpline.ts" />
     <TypeScriptCompile Include="src\geometry\MathHelper.ts" />
-    <TypeScriptCompile Include="src\geometry\Vector2D.ts" />
     <TypeScriptCompile Include="src\track\Road.ts" />
     <TypeScriptCompile Include="src\track\RoadSegment.ts" />
     <TypeScriptCompile Include="src\track\Straight.ts" />

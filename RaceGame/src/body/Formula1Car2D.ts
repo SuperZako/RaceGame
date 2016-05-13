@@ -33,6 +33,7 @@ class Formula1Car2D extends Car2D {
         this.RpmOptimal = 16000;
         this.RpmChangeUp = 16000;
         this.RpmRedLine = 18000;
+
         this.CurrentGear = 1;
         this.IsAutomatic = true;
     }
