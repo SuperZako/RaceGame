@@ -2,9 +2,10 @@
 
 namespace MathHelper {
 
-    export const Pi = 3.141592653589793238463;
-    export const PiOver2 = Pi / 2;
-    export const TwoPi = 2 * Pi;
+    export const Pi = Math.PI;// 3.141592653589793238463;
+    export const PiOver2 = Math.PI / 2;
+    export const PiOver4 = Math.PI / 4.0;
+    export const TwoPi = 2 * Math.PI;
 
     export function Sign(value: number) {
         return value >= 0 ? 1 : -1;
@@ -41,5 +42,19 @@ namespace MathHelper {
             }
         }
         return angle;
+    }
+
+    export function ToDegrees(radians: number) {
+        // This method uses double precission internally,
+        // though it returns single float
+        // Factor = 180 / pi
+        return radians * 180 / Pi;
+    }
+
+    export function ToRadians(degrees: number) {
+        // This method uses double precission internally,
+        // though it returns single float
+        // Factor = pi / 180
+        return degrees * Pi / 180;
     }
 }
