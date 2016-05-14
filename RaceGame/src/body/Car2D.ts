@@ -73,7 +73,6 @@ class Car2D {
         return this._currentGear == 0 ? -1 : 1;
     }
 
-
     private _IsFrontSlipping = false;
     get IsFrontSlipping() { return this._IsFrontSlipping; }
 
