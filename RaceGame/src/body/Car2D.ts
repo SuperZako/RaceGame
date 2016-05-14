@@ -202,8 +202,10 @@ class Car2D {
         zero3.y = MathHelper.Clamp(num14, -this.MaxGripRear, this.MaxGripRear);
         this.IsRearSlipping = num14 < -  this.MaxGripRear || num14 > this.MaxGripRear;
         zero3.y *= num10;
-        if (this.IsFrontSlipping || /*this.IsFrontSlipping*/this.IsRearSlipping)
+        if (this.IsFrontSlipping || this.IsRearSlipping) {
             this.ForceWheelSpin = 0.0;
+        }
+
         zero1.x -= this.ForceWheelSpin;
         let zero4 = new THREE.Vector2();//Vector2.Zero;
         zero4.x = - (this.ForceRollingResistance + this.DragFront * this.ForceDragLong);

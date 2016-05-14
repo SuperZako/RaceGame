@@ -75,7 +75,7 @@ document.onkeydown = function (e) {
             //testCar.Brake = 2;
             return false;
         case 38:
-            testCar.Throttle = 0.1;//1;
+            testCar.Throttle = 1;
             return false;
         case 40:
             testCar.Brake = 1;

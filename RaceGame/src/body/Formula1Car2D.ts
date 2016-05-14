@@ -15,10 +15,10 @@ class Formula1Car2D extends Car2D {
         this.RearWeight = this.FrontAxleDistance / this.WheelBase * this.Mass * 9.81;
         this.Inertia = 2800;
         this.MaxGripFront = 24;
-        this.MaxGripRear = 24.1;
+        this.MaxGripRear = 25;//28;//24.1;
         this.TireMu = 2;
-        this.DragFront = 0.3;
-        this.DragSide = 0.3;
+        this.DragFront = 1;//0.3;
+        this.DragSide = 1;//0.3;
         this.FrontCornerStiffness = -40;
         this.RearCornerStiffness = -40;
         this.DownforceDouble = 600;
