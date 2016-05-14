@@ -152,7 +152,6 @@ class Car2D {
         this.VelocityLocal.x = (cos * this.VelocityWorld.y + sin * this.VelocityWorld.x);
         this.VelocityLocal.y = (- sin * this.VelocityWorld.y + cos * this.VelocityWorld.x);
         
-        
         let num3 = 0.0;
         let num4 = 0.0;
         let num5 = this.WheelBase * 0.5 * this.AngularVelocity;
