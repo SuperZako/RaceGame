@@ -5,14 +5,8 @@
     private baseFuncRangeInt: number;
 
     constructor(private points: number[][], private degree: number/*, copy*/) {
-        //if (copy) {
-        //    this.points = []
-        //    for (var i = 0; i < points.length; i++) {
-        //        this.points.push(points[i]);
-        //    }
-        //} else {
-        //    this.points = points;
-        //}
+
+ 
 
         //this.degree = degree;
         this.dimension = points[0].length;

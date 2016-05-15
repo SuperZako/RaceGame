@@ -12,6 +12,6 @@ class RoadSegment {
     }
 
     public adjustPosition(car: Car2D) {
-
+        return { distance: 0, fromCenter: 0, height: 0, theta: 0 };
     }
 }

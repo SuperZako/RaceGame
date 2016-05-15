@@ -1,4 +1,4 @@
-﻿
+﻿/// <reference path="../geometry/BSpline.ts"/>
 /// <reference path="RoadSegment.ts"/>
 
 class Straight extends RoadSegment {
@@ -11,8 +11,13 @@ class Straight extends RoadSegment {
         private distance: number,
         private width: number,
         private angle: number,
+        private startHeight: number,
+        private endHeight: number,
         private tolerance = 2.0) {
         super();
+
+        var points = [[0, startHeight], [distance * 1 / 3, startHeight], [distance * 2 / 3, endHeight], [distance, endHeight]];
+        var spline = new BSpline(points, 2); //making BSpline
 
         this.x0 = RoadSegment.end.x;
         this.y0 = RoadSegment.end.y;
@@ -31,18 +36,21 @@ class Straight extends RoadSegment {
             let p = this.getWorldCoordinate(y, x);
 
 
-            let z = 0;
+            //let t = 2 * v - 1; 
+            //t *= 6;
+            let h = this.getHeight(v);//(endHeight - startHeight) / (1 + Math.pow(Math.E, -t)) + startHeight;
+            let z = spline.calcAt(v)[1];
 
             if (u === 0.0) {
-                z = 2.0;
+                z = 2.0 + spline.calcAt(v)[1];
             }
 
             if (u === 1.0) {
-                z = 2.0;
+                z = 2.0 + spline.calcAt(v)[1];
             }
 
             // 作ったX・Y・Z座標のベクトルを返す。
-            return new THREE.Vector3(p.x, p.y, z);
+            return new THREE.Vector3(p.x, p.y, /*z*/h);
         };
 
         var param = new THREE.Mesh(
@@ -61,7 +69,19 @@ class Straight extends RoadSegment {
         RoadSegment.end.set(v.x, v.y);
     }
 
+    public getHeight(t: number) {
+        // t:0 to 1
+        t = 2 * t - 1;
+        t *= 6;
+        return (this.endHeight - this.startHeight) / (1 + Math.pow(Math.E, -t)) + this.startHeight;
+    }
 
+    public getNormalAngle(t: number) {
+        let h1 = this.getHeight(t);
+        let h2 = this.getHeight(t + 0.01);
+        let x = 0.01 * this.distance;
+        return Math.atan2(h2 - h1, x);
+    }
     public getWorldCoordinate(distance: number, fromCenter: number) {
         let angle = this.angle;
 
@@ -82,9 +102,10 @@ class Straight extends RoadSegment {
 
         let fromCenter = (x - x0) * Math.cos(angle) + (y - y0) * Math.sin(angle);
         let distance = -(x - x0) * Math.sin(angle) + (y - y0) * Math.cos(angle);
-
-        if (this.distance > distance && distance >= 0 && (Math.abs(fromCenter) - this.width/2) < this.tolerance)
-            return { distance, fromCenter };
+        let height = this.getHeight(distance / this.distance);
+        let theta = this.getNormalAngle(distance / this.distance);
+        if (this.distance > distance && distance >= 0 && (Math.abs(fromCenter) - this.width / 2) < this.tolerance)
+            return { distance, fromCenter, height, theta };
         else
             return null;
     }
@@ -119,5 +140,7 @@ class Straight extends RoadSegment {
         let point = this.getWorldCoordinate(v.distance, v.fromCenter);
         car.Position.x = -point.x;
         car.Position.y = point.y;
+
+        return v;
     }
 }

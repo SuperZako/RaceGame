@@ -97,5 +97,7 @@ class Turn extends RoadSegment {
         let point = this.getWorldCoordinate(v.r, v.theta);
         car.Position.x = -point.x;
         car.Position.y = point.y;
+
+        return { distance: 0, fromCenter: 0, height: 0, theta: 0 };
     }
 }

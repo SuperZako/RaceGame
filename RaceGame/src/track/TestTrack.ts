@@ -6,10 +6,10 @@
 class TestTrack extends Track {
     constructor(scene: THREE.Scene) {
         super();
-        this.addSegment(new Straight(scene, 400, 40, 0));
+        this.addSegment(new Straight(scene, 400, 40, 0, 0, 100));
         //this.addSegment(new Straight(scene, 200, 40, -MathHelper.Pi / 8));
         this.addSegment(new Turn(scene, 0, MathHelper.Pi, 100, 40));
-        this.addSegment(new Straight(scene, 400, 40, MathHelper.Pi));
+        this.addSegment(new Straight(scene, 400, 40, MathHelper.Pi, 100, 0));
         this.addSegment(new Turn(scene, MathHelper.Pi, MathHelper.TwoPi, 100, 40));
     }
 
@@ -37,9 +37,9 @@ class TestTrack extends Track {
             let segment = segments[index];
             let v = segment.getTrackCoordinate(-car.Position.x, car.Position.y);
             if (v !== null) {
-                segment.adjustPosition(car);
+                let h = segment.adjustPosition(car);
                 this.segmentIndex = index;
-                return;
+                return h;
             }
         }
 
@@ -48,10 +48,10 @@ class TestTrack extends Track {
             let segment = segments[index];
             let v = segment.getTrackCoordinate(-car.Position.x, car.Position.y);
             if (v !== null) {
-                segment.adjustPosition(car);
-                document.getElementById('info').innerHTML = "segmentIndex:" + index;
+                let h = segment.adjustPosition(car);
+              
                 this.segmentIndex = index;
-                return;
+                return h;
             }
         }
 
@@ -66,9 +66,9 @@ class TestTrack extends Track {
             let segment = segments[index];
             let v = segment.getTrackCoordinate(-car.Position.x, car.Position.y);
             if (v !== null) {
-                segment.adjustPosition(car);
+                let h = segment.adjustPosition(car);
                 this.segmentIndex = index;
-                return;
+                return h;
             }
         }
         //for (let segment of this.segments) {

@@ -18,7 +18,7 @@ class TestCar extends Formula1Car2D {
     _meshWheelBackLeft: THREE.Mesh = null;
     _meshWheelBackRight: THREE.Mesh = null;
 
-    
+
 
     constructor(scene: THREE.Scene, private track: Track) {
         super();
@@ -84,9 +84,19 @@ class TestCar extends Formula1Car2D {
 
 
 
-        this.track.adjustPosition(this);
+        let h = this.track.adjustPosition(this);
 
-        this._group.position.set(-this.Position.x, 0, -this.Position.y);
-        this._group.rotation.set(0, this.Angle, 0);
+        this._group.position.set(-this.Position.x, h.height, -this.Position.y);
+
+        this.Angle = MathHelper.WrapAngle(this.Angle);
+        //document.getElementById('info').innerHTML = "angle:" + this.Angle;
+        var a = new THREE.Euler(h.theta, this.Angle, 0, 'YXZ');
+        this._group.setRotationFromEuler(a);
+        //if (0 <= this.Angle && this.Angle <= MathHelper.PiOver2 ||
+        //    0 >= this.Angle && this.Angle >= -MathHelper.PiOver2)
+        //    this._group.rotation.set(h.theta, this.Angle, 0);
+        //else
+        //    this._group.rotation.set(-h.theta, this.Angle, 0);
+
     }
 }
