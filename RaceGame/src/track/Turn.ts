@@ -46,6 +46,7 @@ class Turn extends RoadSegment {
 
         let v = this.getWorldCoordinate(radius, endAngle);
         RoadSegment.end.set(v.x, v.y);
+        RoadSegment.collidableMeshList.push(param);
     }
 
 

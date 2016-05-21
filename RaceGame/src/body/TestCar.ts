@@ -75,8 +75,33 @@ class TestCar extends Formula1Car2D {
     }
 
 
-    public getPosition() {
-        return new THREE.Vector3(-this.Position.x, 0, -this.Position.y);
+    //public getPosition() {
+    //    return new THREE.Vector3(-this.Position.x, 0, -this.Position.y);
+    //}
+
+    public Forward() {
+        return new THREE.Vector2(this.Position.x, this.Position.y);
+    }
+
+
+    public calcHeight() {
+        let xAxis = new THREE.Vector3();
+        let yAxis = new THREE.Vector3();
+        let zAxis = new THREE.Vector3();
+
+        let matrix = this._group.matrixWorld.clone();
+        matrix.extractBasis(xAxis, yAxis, zAxis);
+        yAxis.negate();
+        var localVertex = this._group.position.clone();//this._meshWheelFrontLeft.position.clone();
+        var globalVertex = matrix.multiplyVector3(localVertex);
+        //var directionVector = globalVertex.subSelf(Player.position);
+
+        var ray = new THREE.Raycaster(globalVertex, yAxis);
+        var collisionResults = ray.intersectObjects(RoadSegment.collidableMeshList);
+        if (collisionResults.length > 0 /*&& collisionResults[0].distance < directionVector.length()*/) {
+            return collisionResults[0].point.y;
+            // a collision occurred... do something...
+        }
     }
 
     public Update(dt: number) {
@@ -86,17 +111,12 @@ class TestCar extends Formula1Car2D {
 
         let h = this.track.adjustPosition(this);
 
-        this._group.position.set(-this.Position.x, h.height, -this.Position.y);
+        this._group.position.set(-this.Position.x, 0, -this.Position.y);
 
         this.Angle = MathHelper.WrapAngle(this.Angle);
-        //document.getElementById('info').innerHTML = "angle:" + this.Angle;
-        var a = new THREE.Euler(h.theta, this.Angle, 0, 'YXZ');
+        //document.getElementById('info').innerHTML = "angle:" + MathHelper.ToDegrees(h.theta);
+        var a = new THREE.Euler(/*-h.theta*/0, this.Angle, 0, 'XYZ');
         this._group.setRotationFromEuler(a);
-        //if (0 <= this.Angle && this.Angle <= MathHelper.PiOver2 ||
-        //    0 >= this.Angle && this.Angle >= -MathHelper.PiOver2)
-        //    this._group.rotation.set(h.theta, this.Angle, 0);
-        //else
-        //    this._group.rotation.set(-h.theta, this.Angle, 0);
 
     }
 }

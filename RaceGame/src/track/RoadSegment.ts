@@ -4,7 +4,7 @@ class RoadSegment {
 
     static end = new THREE.Vector2();
     static angle = 0;
-
+    static collidableMeshList: THREE.Mesh[] = []
     public getTrackCoordinate(x: number, y: number) {
     }
 

@@ -67,20 +67,22 @@ class Straight extends RoadSegment {
 
         let v = this.getWorldCoordinate(distance, 0);
         RoadSegment.end.set(v.x, v.y);
+
+        RoadSegment.collidableMeshList.push(param);
     }
 
     public getHeight(t: number) {
         // t:0 to 1
         t = 2 * t - 1;
         t *= 6;
-        return (this.endHeight - this.startHeight) / (1 + Math.pow(Math.E, -t)) + this.startHeight;
+        return (this.endHeight - this.startHeight) * MathHelper.Sigmoid(t) + this.startHeight;
     }
 
     public getNormalAngle(t: number) {
-        let h1 = this.getHeight(t);
-        let h2 = this.getHeight(t + 0.01);
-        let x = 0.01 * this.distance;
-        return Math.atan2(h2 - h1, x);
+        t = 2 * t - 1;
+        t *= 6;
+        let y = MathHelper.dSigmoid(t);
+        return Math.atan2(y * (this.endHeight - this.startHeight), this.distance);
     }
     public getWorldCoordinate(distance: number, fromCenter: number) {
         let angle = this.angle;

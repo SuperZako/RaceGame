@@ -37,6 +37,8 @@
     <TypeScriptCompile Include="src\ChaseCamera.ts" />
     <TypeScriptCompile Include="src\geometry\BSpline.ts" />
     <TypeScriptCompile Include="src\geometry\MathHelper.ts" />
+    <TypeScriptCompile Include="src\Tracks\Track.ts" />
+    <TypeScriptCompile Include="src\Tracks\TrackLine.ts" />
     <TypeScriptCompile Include="src\track\Road.ts" />
     <TypeScriptCompile Include="src\track\RoadSegment.ts" />
     <TypeScriptCompile Include="src\track\Straight.ts" />

@@ -57,4 +57,13 @@ namespace MathHelper {
         // Factor = pi / 180
         return degrees * Pi / 180;
     }
+
+    //標準シグモイド関数 (英: standard sigmoid function)
+    export function Sigmoid(x: number) {
+        return 1 / (1 + Math.pow(Math.E, -x));
+    }
+
+    export function dSigmoid(x: number) {
+        return Sigmoid(x) * (1 - Sigmoid(x));
+    }
 }

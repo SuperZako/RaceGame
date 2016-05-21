@@ -2,6 +2,7 @@
 /// <reference path="src/track/TestTrack.ts"/>
 /// <reference path="src/ChaseCamera.ts"/>
 
+/// <reference path="src/Tracks/Track.ts"/>
 
 var scene = new THREE.Scene(); // Create a Three.js scene object.
 
@@ -29,6 +30,7 @@ scene.add(grid);
 let testTrack = new TestTrack(scene);
 var testCar = new TestCar(scene, testTrack);
 
+let track = new RacingGame.Tracks.Track(scene);
 
 var chaseCamera = new ChaseCamera(testCar._group, new THREE.Vector3(0, 5, 10));//new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); // Define the perspective camera's attributes.
 
