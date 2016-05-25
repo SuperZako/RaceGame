@@ -130,14 +130,15 @@ namespace RacingGame.Tracks {
             (<any>path2).closed = true;
 
             let left = new THREE.Geometry();
-
+            let leftTop = new THREE.Geometry();
 
             for (let point of path2.getPoints(5000)) {
                 left.vertices.push(point);
+                leftTop.vertices.push(new THREE.Vector3(point.x, point.y, point.z + 5));
             }
 
             var lineMesh2 = new THREE.Line(
-                left,//the line3 geometry you have yet
+                leftTop,//the line3 geometry you have yet
                 new THREE.LineBasicMaterial({ color: 0x0000ff })//basic blue color as material
             );
 
@@ -162,7 +163,7 @@ namespace RacingGame.Tracks {
                     ++i;
                     return right.vertices[index];//.clone();
                 }
-                
+
             };                       // 作ったX・Y・Z座標のベクトルを返す。
 
             let texture = THREE.ImageUtils.loadTexture("textures/Road.png");
@@ -170,7 +171,7 @@ namespace RacingGame.Tracks {
             texture.repeat.x = 1;
             texture.repeat.y = 100;
             var param = new THREE.Mesh(
-                new THREE.ParametricGeometry(paramFunc, 1, length-1),
+                new THREE.ParametricGeometry(paramFunc, 1, length - 1),
                 // paramFuncに従って、uは8段階、vは32段階でパラメトリック曲面を作成
                 new THREE.MeshLambertMaterial({
                     //color: 0x00ff00,

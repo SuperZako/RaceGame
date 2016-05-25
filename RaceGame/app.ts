@@ -19,7 +19,15 @@ let _ambient = new THREE.AmbientLight(0x888888);
 scene.add(_ambient);
 
 
-
+var geometry = new THREE.PlaneGeometry(5000, 5000);
+let texture = THREE.ImageUtils.loadTexture("textures/field.jpg");
+texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+texture.repeat.x = 100;
+texture.repeat.y = 100;
+var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+var plane = new THREE.Mesh(geometry, material);
+plane.position.z = -0.1;
+scene.add(plane);
 
 let track = new RacingGame.Tracks.Track(scene);
 var testCar = new TestCar(scene, track);
