@@ -35,16 +35,10 @@
     <TypeScriptCompile Include="src\body\Formula1Car2D.ts" />
     <TypeScriptCompile Include="src\body\TestCar.ts" />
     <TypeScriptCompile Include="src\ChaseCamera.ts" />
-    <TypeScriptCompile Include="src\geometry\BSpline.ts" />
     <TypeScriptCompile Include="src\geometry\MathHelper.ts" />
     <TypeScriptCompile Include="src\Tracks\Track.ts" />
     <TypeScriptCompile Include="src\Tracks\TrackLine.ts" />
-    <TypeScriptCompile Include="src\track\Road.ts" />
-    <TypeScriptCompile Include="src\track\RoadSegment.ts" />
-    <TypeScriptCompile Include="src\track\Straight.ts" />
-    <TypeScriptCompile Include="src\track\TestTrack.ts" />
-    <TypeScriptCompile Include="src\track\Track.ts" />
-    <TypeScriptCompile Include="src\track\Turn.ts" />
+    <TypeScriptCompile Include="src\Tracks\TrackVertex.ts" />
     <TypeScriptCompile Include="typings\three-orbitcontrols.d.ts" />
     <TypeScriptCompile Include="typings\three.d.ts" />
     <TypeScriptCompile Include="typings\tween.d.ts" />

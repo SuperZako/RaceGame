@@ -1,5 +1,4 @@
 ﻿/// <reference path="src/body/TestCar.ts"/>
-/// <reference path="src/track/TestTrack.ts"/>
 /// <reference path="src/ChaseCamera.ts"/>
 
 /// <reference path="src/Tracks/Track.ts"/>
@@ -13,30 +12,23 @@ renderer.setSize(window.innerWidth, window.innerHeight); // Set the size of the 
 renderer.setClearColor(new THREE.Color(0xefefef));//背景色
 document.body.appendChild(renderer.domElement); // Append the WebGL viewport to the DOM.
 
-//GridHelper(大きさ, １マスの大きさ)
-var grid = new THREE.GridHelper(1000, 10);
-
-
 
 
 // 環境光
 let _ambient = new THREE.AmbientLight(0x888888);
 scene.add(_ambient);
 
-//シーンオブジェクトに追加
-scene.add(grid);
 
 
-let testTrack = new TestTrack(scene);
-var testCar = new TestCar(scene, testTrack);
 
 let track = new RacingGame.Tracks.Track(scene);
+var testCar = new TestCar(scene, track);
 
-var chaseCamera = new ChaseCamera(testCar._group, new THREE.Vector3(0, 5, 10));//new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); // Define the perspective camera's attributes.
+var chaseCamera = new ChaseCamera(testCar._group, new THREE.Vector3(0, -20, 10));//new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); // Define the perspective camera's attributes.
 
 // スポットライト
-let _spot = new THREE.SpotLight(0xFFFFFF, 10, 3000, Math.PI / 1, 20);
-_spot.position.set(0, 2000, 0);
+let _spot = new THREE.SpotLight(0xFFFFFF, 2, 3000, Math.PI / 1, 20);
+_spot.position.set(0, 0, 2000);
 _spot.castShadow = true;
 _spot.target = testCar._group;
 //if (IS_DEBUG_MODE) _spot.shadowCameraVisible = true;
@@ -57,10 +49,10 @@ let render = () => {
 
     renderer.render(scene, chaseCamera.camera); // Each time we change the position of the cube object, we must re-render it.
 
-    if (left) {
-        testCar.SteerAngle = Math.min(testCar.SteerAngle + 0.014 , +0.4);
-    } else if (right) {
-        testCar.SteerAngle = Math.max(testCar.SteerAngle - 0.014 , -0.4);
+    if (/*left*/right) {
+        testCar.SteerAngle = Math.min(testCar.SteerAngle + 0.014, +0.4);
+    } else if (/*right*/left) {
+        testCar.SteerAngle = Math.max(testCar.SteerAngle - 0.014, -0.4);
     } else {
         testCar.SteerAngle *= 0.5;//0.9;
     }

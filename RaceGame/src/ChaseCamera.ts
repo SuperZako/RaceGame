@@ -10,6 +10,7 @@ class ChaseCamera {
     positions: THREE.Vector3[] = [];
 
     constructor(private target: THREE.Object3D, private positionOffset: THREE.Vector3) {
+        this.camera.up.set(0, 0, 1);
         this.dummyCamera = this.camera.clone();
 
 
@@ -48,8 +49,11 @@ class ChaseCamera {
         v.lerp(this.lastPosition, 0.5);
         //let average = this.averagePosition();
 
+      
+        this.dummyCamera.up.set(0, 0, 1);
         this.dummyCamera.position.set(v.x, v.y, v.z);
         this.dummyCamera.lookAt(target.position);
+        
 
 
         this.camera.quaternion.slerp(this.dummyCamera.quaternion, 0.5);

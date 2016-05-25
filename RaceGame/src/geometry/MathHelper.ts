@@ -58,12 +58,9 @@ namespace MathHelper {
         return degrees * Pi / 180;
     }
 
-    //標準シグモイド関数 (英: standard sigmoid function)
-    export function Sigmoid(x: number) {
-        return 1 / (1 + Math.pow(Math.E, -x));
-    }
-
-    export function dSigmoid(x: number) {
-        return Sigmoid(x) * (1 - Sigmoid(x));
+    export function GetDistance(x1: number, y1: number, x2: number, y2: number) {
+        let dx = x1 - x2;
+        let dy = y1 - y2;
+        return Math.sqrt(dx * dx + dy * dy);
     }
 }
