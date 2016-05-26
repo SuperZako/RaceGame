@@ -1,4 +1,4 @@
-﻿/// <reference path="../geometry/MathHelper.ts"/>
+﻿/// <reference path="../Helpers/MathHelper.ts"/>
 
 class Car2D {
     public DownforceDouble = 600;
@@ -150,7 +150,7 @@ class Car2D {
         const cos = Math.cos(this.Angle);
         this.VelocityLocal.x = (cos * this.VelocityWorld.y + sin * this.VelocityWorld.x);
         this.VelocityLocal.y = (- sin * this.VelocityWorld.y + cos * this.VelocityWorld.x);
-        
+
         let num3 = 0.0;
         let num4 = 0.0;
         let num5 = this.WheelBase * 0.5 * this.AngularVelocity;
@@ -181,7 +181,7 @@ class Car2D {
         this.CurrentFrontWeight = this.FrontWeight - num9;
         this.CurrentRearWeight = this.RearWeight + num9;
         this.ForceWheelSpin = this.CurrentRearWeight <= 0.0 ? 0.0 : Math.max(0.0, (this.ForceLong - this.ForceDragLong - this.CurrentRearWeight * this.TireMu));
-        let zero1 = new THREE.Vector2();//Vector2.Zero;
+        let zero1 = { x: 0, y: 0 };// = new THREE.Vector2();//Vector2.Zero;
         zero1.x = this.ForceLong;
         let num10 = ((1.0 + Math.abs(this.VelocityLocal.x) / this.DownforceDouble) * this.Mass * 9.80000019073486 * 0.5);
         let num11 = this.FrontCornerStiffness;
@@ -190,12 +190,12 @@ class Car2D {
             num11 = -0.2;
             num12 = -0.2;
         }
-        let zero2 = new THREE.Vector2();//Vector2.Zero;
+        let zero2 = { x: 0, y: 0 };//new THREE.Vector2();//Vector2.Zero;
         let num13 = num11 * num6;
         zero2.y = MathHelper.Clamp(num13, -this.MaxGripFront, this.MaxGripFront);
         this.IsFrontSlipping = num13 < -this.MaxGripFront || num13 > this.MaxGripFront;
         zero2.y *= num10;
-        let zero3 = new THREE.Vector2();//Vector2.Zero;
+        let zero3 = { x: 0, y: 0 };// new THREE.Vector2();//Vector2.Zero;
         let num14 = num12 * num7;
         zero3.y = MathHelper.Clamp(num14, -this.MaxGripRear, this.MaxGripRear);
         this.IsRearSlipping = num14 < -  this.MaxGripRear || num14 > this.MaxGripRear;
@@ -205,20 +205,22 @@ class Car2D {
         }
 
         zero1.x -= this.ForceWheelSpin;
-        let zero4 = new THREE.Vector2();//Vector2.Zero;
+        let zero4 = { x: 0, y: 0 };//new THREE.Vector2();//Vector2.Zero;
         zero4.x = - (this.ForceRollingResistance + this.DragFront * this.ForceDragLong);
         zero4.y = - (this.ForceRollingResistance + this.DragSide * this.ForceDragSide);
-        let zero5 = new THREE.Vector2();//Vector2.Zero;
+        let zero5 = { x: 0, y: 0 };//= new THREE.Vector2();//Vector2.Zero;
         zero5.x = zero1.x + Math.sin(this.SteerAngle) * zero2.x + zero3.x + zero4.x;
         zero5.y = zero1.y + Math.cos(this.SteerAngle) * zero2.y + zero3.y + zero4.y;
         let num15 = this.VelocityLocal.x >= this.WheelBase * 8.0 ? (this.FrontAxleDistance * zero2.y - this.RearAxleDistance * zero3.y) : (0.5 * zero2.y - 0.5 * zero3.y);
         //this.AccelerationLocal = zero5 / this.Mass;
-        this.AccelerationLocal = zero5.divideScalar(this.Mass);
+        //this.AccelerationLocal = zero5.divideScalar(this.Mass);
+        this.AccelerationLocal.x = zero5.x / this.Mass;
+        this.AccelerationLocal.y = zero5.y / this.Mass;
         let num16 = num15 / this.Inertia;
         this.AccelerationWorld.x = (cos * this.AccelerationLocal.y + sin * this.AccelerationLocal.x);
         this.AccelerationWorld.y = (- sin * this.AccelerationLocal.y + cos * this.AccelerationLocal.x);
-        
-        
+
+
         //this.VelocityWorld += this.AccelerationWorld * dt;
         this.VelocityWorld.addScaledVector(this.AccelerationWorld, dt);
         this.AngularVelocity += num16 * dt;

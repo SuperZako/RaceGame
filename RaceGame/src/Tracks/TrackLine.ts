@@ -13,15 +13,15 @@ namespace RacingGame.Tracks {
             this.angle = Math.atan2(end.y - start.y, end.x - start.x);
 
 
-            var geometry = new THREE.Geometry();
-            geometry.vertices.push(this.line.start);
-            geometry.vertices.push(this.line.end);
+            //var geometry = new THREE.Geometry();
+            //geometry.vertices.push(this.line.start);
+            //geometry.vertices.push(this.line.end);
 
-            var lineMesh = new THREE.Line(
-                geometry,//the line3 geometry you have yet
-                new THREE.LineBasicMaterial({ color: 0x0000ff })//basic blue color as material
-            );
-            scene.add(lineMesh);
+            //var lineMesh = new THREE.Line(
+            //    geometry,//the line3 geometry you have yet
+            //    new THREE.LineBasicMaterial({ color: 0x0000ff })//basic blue color as material
+            //);
+            //scene.add(lineMesh);
         }
 
 
@@ -150,23 +150,19 @@ namespace RacingGame.Tracks {
             let length = left.vertices.length;
             let i = 0;
             var paramFunc = (u: number, v: number) => {
-                // uとvは0～1までの値をもらえる
-                u *= 1;                //   uの定義域を設定。この例では0～1のまま。0～2πにしたいときなど適宜設定。
-                v *= 1;                //   vの定義域を設定。
-
                 if (i % 2 === 0) {
                     let index = i / 2;
                     ++i;
-                    return left.vertices[index];//.clone();
+                    return left.vertices[index];
                 } else {
                     let index = (i - 1) / 2;
                     ++i;
-                    return right.vertices[index];//.clone();
+                    return right.vertices[index];
                 }
 
-            };                       // 作ったX・Y・Z座標のベクトルを返す。
+            };             
 
-            let texture = THREE.ImageUtils.loadTexture("textures/Road.png");
+            let texture = new THREE.TextureLoader().load("textures/Road.png");
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.x = 1;
             texture.repeat.y = 100;
@@ -181,7 +177,7 @@ namespace RacingGame.Tracks {
             scene.add(param);
 
 
-            scene.add(splineObject);
+            //scene.add(splineObject);
         }
     }
 }

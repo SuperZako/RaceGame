@@ -3,7 +3,6 @@
 namespace RacingGame.Tracks {
     export class Track extends TrackLine {
         public get StartPosition() {
-
             return this.splinePath.getPoint(0);
         }
 

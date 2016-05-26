@@ -1,13 +1,6 @@
 ﻿/// <reference path="Car2D.ts"/>
 /// <reference path="Formula1Car2D.ts"/>
 
-/* ---------- 共通関数 ---------- */
-
-function getAngleByRotation(rot: number) {
-    return rot * Math.PI / 180;
-}
-
-
 class TestCar extends Formula1Car2D {
 
     _group: THREE.Object3D = null;
@@ -76,7 +69,7 @@ class TestCar extends Formula1Car2D {
         this.Angle = -euler.z;
     }
 
-
+    euler = new THREE.Euler();
     public Update(dt: number) {
         super.Update(dt);
 
@@ -88,10 +81,9 @@ class TestCar extends Formula1Car2D {
             this.Position.y = result.y;
             this.VelocityWorld.multiplyScalar(0.7);
         }
-
         this._group.position.set(this.Position.x, this.Position.y, 0);
-        var a = new THREE.Euler(0, 0, -this.Angle, 'XYZ');
-        this._group.setRotationFromEuler(a);
-
+        //var a = new THREE.Euler(0, 0, -this.Angle, 'XYZ');
+        this.euler.z = -this.Angle;
+        this._group.setRotationFromEuler(this.euler);
     }
 }

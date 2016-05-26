@@ -6,11 +6,11 @@
 var scene = new THREE.Scene(); // Create a Three.js scene object.
 
 let clock = new THREE.Clock();
-
+let container = document.getElementById('container');
 var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight); // Set the size of the WebGL viewport.
 renderer.setClearColor(new THREE.Color(0xefefef));//背景色
-document.body.appendChild(renderer.domElement); // Append the WebGL viewport to the DOM.
+container.appendChild(renderer.domElement); // Append the WebGL viewport to the DOM.
 
 
 
@@ -20,7 +20,7 @@ scene.add(_ambient);
 
 
 var geometry = new THREE.PlaneGeometry(5000, 5000);
-let texture = THREE.ImageUtils.loadTexture("textures/field.jpg");
+let texture = new THREE.TextureLoader().load("textures/grass.jpg");
 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.x = 100;
 texture.repeat.y = 100;
@@ -28,6 +28,7 @@ var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSid
 var plane = new THREE.Mesh(geometry, material);
 plane.position.z = -0.1;
 scene.add(plane);
+
 
 let track = new RacingGame.Tracks.Track(scene);
 var testCar = new TestCar(scene, track);
@@ -37,33 +38,38 @@ var chaseCamera = new ChaseCamera(testCar._group, new THREE.Vector3(0, -20, 10))
 // スポットライト
 let _spot = new THREE.SpotLight(0xFFFFFF, 2, 3000, Math.PI / 1, 20);
 _spot.position.set(0, 0, 2000);
-_spot.castShadow = true;
+//_spot.castShadow = true;
 _spot.target = testCar._group;
 //if (IS_DEBUG_MODE) _spot.shadowCameraVisible = true;
 scene.add(_spot);
 
+init();
 
-
-let render = () => {
-    //controls.update();
+// FUNCTIONS     
+function init() {
+    window.addEventListener('resize', () => {
+        console.log("resize");
+        chaseCamera.camera.aspect = window.innerWidth / window.innerHeight;
+        chaseCamera.camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }, false);
+}
+function render() {
     requestAnimationFrame(render); // Call the render() function up to 60 times per second (i.e., up to 60 animation frames per second).
 
     var delta = clock.getDelta();
-
     testCar.Update(delta);
     chaseCamera.Update(delta);
 
-
-
-    renderer.render(scene, chaseCamera.camera); // Each time we change the position of the cube object, we must re-render it.
-
-    if (/*left*/right) {
+    if (right) {
         testCar.SteerAngle = Math.min(testCar.SteerAngle + 0.014, +0.4);
-    } else if (/*right*/left) {
+    } else if (left) {
         testCar.SteerAngle = Math.max(testCar.SteerAngle - 0.014, -0.4);
     } else {
-        testCar.SteerAngle *= 0.5;//0.9;
+        testCar.SteerAngle *= 0.5;
     }
+
+    renderer.render(scene, chaseCamera.camera); // Each time we change the position of the cube object, we must re-render it.
 };
 
 render(); // Start the rendering of the animation frames.
@@ -75,22 +81,22 @@ document.onkeydown = function (e) {
     switch (e.keyCode) {
         case 32:
             //testCar.Brake = 2;
-            return false;
+            break;//return false;
         case 38:
             testCar.Throttle = 1;
-            return false;
+            break;//return false;
         case 40:
             testCar.Brake = 1;
-            return false;
+            break;//return false;
         case 37:
             left = true;
-            return false;
+            break;//return false;
         case 39:
             right = true;
-            return false;
+            break;//return false;
         case 67: // 'C' - pick the next car model
         case 82: // 'R' - reset the car
-            return false;
+            break;//return false;
     }
 };
 
@@ -100,18 +106,21 @@ document.onkeyup = function (e) {
     switch (e.keyCode) {
         case 32:
             //testCar.Brake = 0;
-            return false;
+            break;//return false;
         case 38:
             testCar.Throttle = 0;
-            return false;
+            break;//return false;
         case 40:
             testCar.Brake = 0;
-            return false;
+            break;//return false;
         case 37:
             left = false;
-            return false;
+            break;//return false;
         case 39:
             right = false;
-            return false;
+            break;//return false;
     }
 };
+
+
+

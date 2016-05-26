@@ -1,35 +1,39 @@
-﻿
+﻿/// <reference path="Helpers/Vector3D.ts"/>
 
 class ChaseCamera {
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); // Define the perspective camera's attributes.
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000); // Define the perspective camera's attributes.
     dummyCamera: THREE.PerspectiveCamera;
-    lastlastPosition = new THREE.Vector3();
-    lastPosition = new THREE.Vector3();
 
-
-    positions: THREE.Vector3[] = [];
+    positions: IVector3D[] = [];
 
     constructor(private target: THREE.Object3D, private positionOffset: THREE.Vector3) {
         this.camera.up.set(0, 0, 1);
         this.dummyCamera = this.camera.clone();
 
 
-        for (let i = 0; i < 10; ++i)
-            this.positions.push(new THREE.Vector3());
+        for (let i = 0; i < 5; ++i)
+            this.positions.push({ x: 0, y: 0, z: 0 });
     }
 
-    private averagePosition() {
+    private averagePosition(vector: IVector3D) {
         let positions = this.positions;
-        let v = new THREE.Vector3();
+
+        positions.pop();
+        positions.unshift(vector);
+
+        let x = 0;
+        let y = 0;
+        let z = 0;
         for (let position of positions) {
-            v.add(position);
+            x += position.x;
+            y += position.y;
+            z += position.z;
         }
+        x /= 5;
+        y /= 5;
+        z /= 5;
 
-        v.x /= 10;
-        v.y /= 10;
-        v.z /= 10;
-
-        return v;
+        return { x, y, z };
     }
 
     public Update(dt: number) {
@@ -37,23 +41,12 @@ class ChaseCamera {
         let v = this.positionOffset.clone();
         v.applyMatrix4(target.matrixWorld);
 
-        //this.positions.shift();
-        //this.positions.push(this.dummyCamera.position.clone());
+        let pos = this.averagePosition({ x: v.x, y: v.y, z: v.z });
 
-        //this.lastlastPosition = this.lastPosition.clone();
-        this.lastlastPosition.set(this.lastPosition.x, this.lastPosition.y, this.lastPosition.z);
-
-        this.lastPosition = this.dummyCamera.position.clone();
-
-        this.lastPosition.lerp(this.lastlastPosition, 0.5);
-        v.lerp(this.lastPosition, 0.5);
-        //let average = this.averagePosition();
-
-      
         this.dummyCamera.up.set(0, 0, 1);
-        this.dummyCamera.position.set(v.x, v.y, v.z);
+        this.dummyCamera.position.set(pos.x, pos.y, pos.z);
         this.dummyCamera.lookAt(target.position);
-        
+
 
 
         this.camera.quaternion.slerp(this.dummyCamera.quaternion, 0.5);
