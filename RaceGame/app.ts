@@ -1,7 +1,8 @@
 ﻿/// <reference path="src/body/TestCar.ts"/>
-/// <reference path="src/ChaseCamera.ts"/>
-
 /// <reference path="src/Tracks/Track.ts"/>
+/// <reference path="src/ChaseCamera.ts"/>
+/// <reference path="src/Background.ts"/>
+
 
 var scene = new THREE.Scene(); // Create a Three.js scene object.
 
@@ -18,16 +19,8 @@ container.appendChild(renderer.domElement); // Append the WebGL viewport to the 
 let _ambient = new THREE.AmbientLight(0x888888);
 scene.add(_ambient);
 
+let backgournd = new Background(scene);
 
-var geometry = new THREE.PlaneGeometry(5000, 5000);
-let texture = new THREE.TextureLoader().load("textures/grass.jpg");
-texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-texture.repeat.x = 100;
-texture.repeat.y = 100;
-var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
-var plane = new THREE.Mesh(geometry, material);
-plane.position.z = -0.1;
-scene.add(plane);
 
 
 let track = new RacingGame.Tracks.Track(scene);

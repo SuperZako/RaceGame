@@ -27,6 +27,10 @@
     <Content Include="index.html" />
     <Content Include="lib\three\OrbitControls.js" />
     <Content Include="lib\three\three.min.js" />
+    <Content Include="textures\grass.jpg" />
+    <Content Include="textures\grdrla.jpg" />
+    <Content Include="textures\Road.png" />
+    <Content Include="textures\sky.jpg" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

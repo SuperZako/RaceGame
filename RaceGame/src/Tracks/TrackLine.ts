@@ -134,7 +134,7 @@ namespace RacingGame.Tracks {
 
             for (let point of path2.getPoints(5000)) {
                 left.vertices.push(point);
-                leftTop.vertices.push(new THREE.Vector3(point.x, point.y, point.z + 5));
+                leftTop.vertices.push(new THREE.Vector3(point.x, point.y, point.z + 3));
             }
 
             var lineMesh2 = new THREE.Line(
@@ -145,7 +145,7 @@ namespace RacingGame.Tracks {
             scene.add(lineMesh2);
 
 
-
+            //----------------------------------------------------------------
             // パラメトリック関数の定義
             let length = left.vertices.length;
             let i = 0;
@@ -163,6 +163,7 @@ namespace RacingGame.Tracks {
             };             
 
             let texture = new THREE.TextureLoader().load("textures/Road.png");
+            //let texture = new THREE.TextureLoader().load("textures/grdrla.jpg");
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.x = 1;
             texture.repeat.y = 100;
@@ -175,9 +176,39 @@ namespace RacingGame.Tracks {
                 })
             );
             scene.add(param);
+            //----------------------------------------------------------------
+            length = left.vertices.length;
+            i = 0;
+            var paramFunc = (u: number, v: number) => {
+                if (i % 2 === 0) {
+                    let index = i / 2;
+                    ++i;
+                    return leftTop.vertices[index];
+                } else {
+                    let index = (i - 1) / 2;
+                    ++i;
+                    return left.vertices[index];
+                }
+
+            };
+
+            let texturegrdrla = new THREE.TextureLoader().load("textures/grdrla.jpg");
+            texturegrdrla.wrapS = texturegrdrla.wrapT = THREE.RepeatWrapping;
+            texturegrdrla.repeat.x = 1;
+            texturegrdrla.repeat.y = 10;
+            var param = new THREE.Mesh(
+                new THREE.ParametricGeometry(paramFunc, 1, length - 1),
+                // paramFuncに従って、uは8段階、vは32段階でパラメトリック曲面を作成
+                new THREE.MeshLambertMaterial({
+                    //color: 0x00ff00,
+                    map: texturegrdrla,
+                    side: THREE.DoubleSide
+                })
+            );
+            scene.add(param);
 
 
-            //scene.add(splineObject);
+            scene.add(splineObject);
         }
     }
 }
