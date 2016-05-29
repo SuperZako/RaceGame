@@ -2,8 +2,10 @@
 
 namespace RacingGame.Tracks {
     export class Track extends TrackLine {
+
         public get StartPosition() {
-            return this.splinePath.getPoint(0);
+            //return this.splinePath.getPoint(0);
+            return this.points[0].pos;
         }
 
         constructor(scene: THREE.Scene) {
@@ -15,12 +17,12 @@ namespace RacingGame.Tracks {
             return new THREE.Matrix4().makeBasis(this.points[0].right, this.points[0].dir, this.points[0].up);
         }
 
-        public GetCurrentSegmentAndIndex(x: number, y: number) {
+        public GetCurrentSegmentAndIndex(x: number, y: number, z: number) {
             let maxDistance = Number.MAX_VALUE;
             let segments = this.segments;
             let index = -1;
             for (let i = 0; i < segments.length; ++i) {
-                let distance = MathHelper.GetDistance(segments[i].pos.x, segments[i].pos.y, x, y);
+                let distance = Vector3D.Distance(segments[i].pos.x, segments[i].pos.y, segments[i].pos.z, x, y, z);
                 if (distance < maxDistance) {
                     index = i;
                     maxDistance = distance;
@@ -30,9 +32,40 @@ namespace RacingGame.Tracks {
             return { segment: segments[index], index: index };
 
         }
-        //ApplyGravityAndCheckForCollisions
-        public ApplyCheckForCollisions(x: number, y: number, vx: number, vy: number) {
-            let segmentAndIndex = this.GetCurrentSegmentAndIndex(x, y);
+
+        public ApplyGravityAndCheckForCollisions(x: number, y: number, z: number, vx: number, vy: number) {
+            let segmentAndIndex = this.GetCurrentSegmentAndIndex(x, y, z);
+
+            let segment = segmentAndIndex.segment;
+
+            let right = new THREE.Vector3(vx, vy, 0);
+            right.projectOnVector(segment.Start.right);
+
+            let dir = new THREE.Vector3(vx, vy, 0);
+            dir.projectOnVector(segment.Start.dir);
+
+            x = x + right.x + dir.x;
+            y = y + right.y + dir.y;
+            z = z + right.z + dir.z;
+
+            let result = segment.clamp(new THREE.Vector3(x, y, z), 20);
+            let sign = segment.sign(vx, vy);
+            let angle = segment.angle;
+
+            if (result === null) {
+                return { x: x, y: y, z: z, angle: null };
+            }
+            return {
+                x: result.x,
+                y: result.y,
+                z: result.z,
+                angle: angle,
+            };
+        }
+
+
+        public ApplyCheckForCollisions(x: number, y: number, z: number, vx: number, vy: number) {
+            let segmentAndIndex = this.GetCurrentSegmentAndIndex(x, y, z);
 
             let segment = segmentAndIndex.segment;//segments[index];
 

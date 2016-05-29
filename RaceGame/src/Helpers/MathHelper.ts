@@ -56,10 +56,4 @@ namespace MathHelper {
         // Factor = pi / 180
         return degrees * Pi / 180;
     }
-
-    export function GetDistance(x1: number, y1: number, x2: number, y2: number) {
-        let dx = x1 - x2;
-        let dy = y1 - y2;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
 }

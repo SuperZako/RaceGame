@@ -44,6 +44,7 @@
     <TypeScriptCompile Include="src\Helpers\Vector3D.ts" />
     <TypeScriptCompile Include="src\Tracks\Track.ts" />
     <TypeScriptCompile Include="src\Tracks\TrackLine.ts" />
+    <TypeScriptCompile Include="src\Tracks\TrackSegment.ts" />
     <TypeScriptCompile Include="src\Tracks\TrackVertex.ts" />
     <TypeScriptCompile Include="typings\three-orbitcontrols.d.ts" />
     <TypeScriptCompile Include="typings\three.d.ts" />

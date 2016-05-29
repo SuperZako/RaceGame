@@ -61,8 +61,10 @@ class Car3D extends Formula1Car2D {
         //this._meshWheelBackRight.rotation.z = getAngleByRotation(90);
         //this._meshWheelBackRight.position.set(-1.1, 0.25, -1.5);
         //this._group.add(this._meshWheelBackRight);
-        this.Position.x = track.StartPosition.x;
-        this.Position.y = track.StartPosition.y;
+        //this.Position.x = track.StartPosition.x;
+        //this.Position.y = track.StartPosition.y;
+        this._group.position.set(track.StartPosition.x, track.StartPosition.y, track.StartPosition.z);
+
         let m = track.GetTrackPositionMatrix(0);
         let euler = new THREE.Euler().setFromRotationMatrix(m);
         this.Angle = -euler.z;
@@ -71,17 +73,19 @@ class Car3D extends Formula1Car2D {
     euler = new THREE.Euler();
     public Update(dt: number) {
         super.Update(dt);
+        let x = this._group.position.x;
+        let y = this._group.position.y;
+        let z = this._group.position.z;
+        let result = this.track.ApplyGravityAndCheckForCollisions(x, y, z, this.VelocityWorld.x * dt, this.VelocityWorld.y * dt);
+        //let result = this.track.ApplyCheckForCollisions(this.Position.x, this.Position.y, this.VelocityWorld.x, this.VelocityWorld.y);
 
-        let result = this.track.ApplyCheckForCollisions(this.Position.x, this.Position.y, this.VelocityWorld.x, this.VelocityWorld.y);
 
-
-        if (result !== null) {
+        if (result.angle !== null) {
             this.Angle = -(result.angle - MathHelper.PiOver2);
-            this.Position.x = result.x;
-            this.Position.y = result.y;
             this.VelocityWorld.multiplyScalar(0.7);
         }
-        this._group.position.set(this.Position.x, this.Position.y, 0);
+
+        this._group.position.set(result.x, result.y, result.z);
         this.euler.z = -this.Angle;
         this._group.setRotationFromEuler(this.euler);
     }

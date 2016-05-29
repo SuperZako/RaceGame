@@ -9,20 +9,16 @@ class CPUCar extends Car3D {
     }
 
     public Update(dt: number) {
-        let point = this.track.nextPoint(this.Position.x, this.Position.y);
+        let point = this.track.nextPoint(this._group.position.x, this._group.position.y);
 
-
-
-        let x = (point.x - this.Position.x);
-        let y = (point.y - this.Position.y);
+        let x = (point.x - this._group.position.x);
+        let y = (point.y - this._group.position.y);
 
         let angle = -this.Angle;
         let deltaX = x * Math.cos(angle) + y * Math.sin(angle);
         let deltaY = -x * Math.sin(angle) + y * Math.cos(angle);
 
-        this._meshWheelFrontLeft.position.set(this.Position.x + deltaX, this.Position.y + deltaY, point.z);
 
-        //document.getElementById("info").innerHTML = "deltaY:" + deltaY;
         if (Math.abs(deltaX) < 5) {
             this.SteerAngle *= 0.5;
         } else if (deltaX > 0) {
@@ -45,7 +41,7 @@ class CPUCar extends Car3D {
             this.Brake = 0;
         }
 
-        document.getElementById("info").innerHTML = "Speed:" + this.Speed;
+        //document.getElementById("info").innerHTML = "Speed:" + this.Speed;
 
 
         if (this.Speed > 180) {
