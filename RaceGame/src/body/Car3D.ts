@@ -1,7 +1,7 @@
 ﻿/// <reference path="Car2D.ts"/>
 /// <reference path="Formula1Car2D.ts"/>
 
-class TestCar extends Formula1Car2D {
+class Car3D extends Formula1Car2D {
 
     _group: THREE.Object3D = null;
     _meshBody: THREE.Mesh = null;
@@ -11,9 +11,7 @@ class TestCar extends Formula1Car2D {
     _meshWheelBackLeft: THREE.Mesh = null;
     _meshWheelBackRight: THREE.Mesh = null;
 
-
-
-    constructor(scene: THREE.Scene, private track: RacingGame.Tracks.Track) {
+    constructor(scene: THREE.Scene, protected track: RacingGame.Tracks.Track) {
         super();
 
         // 車
@@ -33,13 +31,14 @@ class TestCar extends Formula1Car2D {
         //this._meshBody2.castShadow = true;
         //this._meshBody2.position.set(0, 1.25, -0.5);
         //this._group.add(this._meshBody2);
-        //// 車（タイヤ）
-        //geometry = new THREE.CylinderGeometry(0.5, 0.5, 0.5);
-        //material = new THREE.MeshPhongMaterial({ color: 0x000000 });
-        //this._meshWheelFrontLeft = new THREE.Mesh(geometry, material);
-        //this._meshWheelFrontLeft.rotation.x = getAngleByRotation(90);
-        //this._meshWheelFrontLeft.rotation.z = getAngleByRotation(90);
-        //this._meshWheelFrontLeft.position.set(1.1, 0.25, 1.5);
+        // 車（タイヤ）
+        geometry = new THREE.CylinderGeometry(0.5, 0.5, 0.5);
+        material = new THREE.MeshPhongMaterial({ color: 0x000000 });
+        this._meshWheelFrontLeft = new THREE.Mesh(geometry, material);
+        this._meshWheelFrontLeft.rotation.x = MathHelper.ToRadians(90);
+        this._meshWheelFrontLeft.rotation.z = MathHelper.ToRadians(90);
+        this._meshWheelFrontLeft.position.set(1.1, 0.25, 1.5);
+        scene.add(this._meshWheelFrontLeft);
         //this._group.add(this._meshWheelFrontLeft);
         ////
         //geometry = new THREE.CylinderGeometry(0.5, 0.5, 0.5);
@@ -73,16 +72,16 @@ class TestCar extends Formula1Car2D {
     public Update(dt: number) {
         super.Update(dt);
 
-        let result = track.ApplyCheckForCollisions(this.Position.x, this.Position.y, this.VelocityWorld.x, this.VelocityWorld.y);
+        let result = this.track.ApplyCheckForCollisions(this.Position.x, this.Position.y, this.VelocityWorld.x, this.VelocityWorld.y);
+
 
         if (result !== null) {
-            this.Angle = -(result.angle-MathHelper.PiOver2);
+            this.Angle = -(result.angle - MathHelper.PiOver2);
             this.Position.x = result.x;
             this.Position.y = result.y;
             this.VelocityWorld.multiplyScalar(0.7);
         }
         this._group.position.set(this.Position.x, this.Position.y, 0);
-        //var a = new THREE.Euler(0, 0, -this.Angle, 'XYZ');
         this.euler.z = -this.Angle;
         this._group.setRotationFromEuler(this.euler);
     }

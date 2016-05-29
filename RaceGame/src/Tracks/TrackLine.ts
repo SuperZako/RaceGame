@@ -24,6 +24,12 @@ namespace RacingGame.Tracks {
             //scene.add(lineMesh);
         }
 
+        public closestPoint(point: THREE.Vector3) {
+            let side = this.side({ x: point.x, y: point.y });
+
+            let closestPoint = this.line.closestPointToPoint(point);
+            return { point: closestPoint, side: side };
+        }
 
         public clamp(point: THREE.Vector3, max: number) {
             let closestPoint = this.line.closestPointToPoint(point);
@@ -37,6 +43,22 @@ namespace RacingGame.Tracks {
             return null;
         }
 
+        public side(p1: { x: number, y: number }) {
+
+            let p2 = this.line.start; // 有向線分 e の始点
+            let p3 = this.line.end; // 有向線分 e の終点
+
+            // 有向線分 (p2,p1), (p2,p3) の外積の z 成分を求める
+            const n = p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y);
+
+            if (n > 0)
+                return 1; // 左
+            else if (n < 0)
+                return -1; // 右
+
+            return 0; // 線上
+        }
+
         public sign(vx: number, vy: number) {
             return this.delta.x * vx + this.delta.y * vy;
         }
@@ -45,9 +67,9 @@ namespace RacingGame.Tracks {
     export class TrackLine {
         protected splinePath = new THREE.CatmullRomCurve3([
             new THREE.Vector3(-400, -400, 0),
-            new THREE.Vector3(400, -400, 0),
-            new THREE.Vector3(1400, -400, 0),
-            new THREE.Vector3(400, 400, 0),
+            new THREE.Vector3(400, -400, 10),
+            new THREE.Vector3(1400, -400, 20),
+            new THREE.Vector3(400, 400, 10),
             new THREE.Vector3(-400, 400, 0),
         ]);
 
@@ -160,7 +182,7 @@ namespace RacingGame.Tracks {
                     return right.vertices[index];
                 }
 
-            };             
+            };
 
             let texture = new THREE.TextureLoader().load("textures/Road.png");
             //let texture = new THREE.TextureLoader().load("textures/grdrla.jpg");

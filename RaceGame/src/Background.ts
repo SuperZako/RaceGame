@@ -3,8 +3,6 @@
     private _field: THREE.Mesh = null;
     private _sky: THREE.Mesh = null;
 
-
-
     constructor(scene: THREE.Scene) {
         this._scene = scene;
         //

@@ -73,11 +73,13 @@ class Car2D {
         return this._currentGear == 0 ? -1 : 1;
     }
 
-    private _IsFrontSlipping = false;
-    get IsFrontSlipping() { return this._IsFrontSlipping; }
+    //private _IsFrontSlipping = false;
+    //get IsFrontSlipping() { return this._IsFrontSlipping; }
+    protected IsFrontSlipping = false;
 
-    private _IsRearSlipping = false;
-    get IsRearSlipping() { return this._IsRearSlipping; }
+    //private _IsRearSlipping = false;
+    //get IsRearSlipping() { return this._IsRearSlipping; }
+    protected IsRearSlipping = false;
 
     private _ForceWheelSpin = 0;
     get ForceWheelSpin() { return this._ForceWheelSpin; }
@@ -85,18 +87,23 @@ class Car2D {
 
     private _Kph = 0;
     get Kph() { return this._Kph; }
+    set Kph(value: number) { this._Kph = value; }
 
     private _Mph = 0;
     get Mph() { return this._Mph; }
+    set Mph(value: number) { this._Mph = value;}
 
     private _RpsWheel = 0;
     get RpsWheel() { return this._RpsWheel; }
+    set RpsWheel(value: number) { this._RpsWheel = value; }
 
     private _RpmWheel = 0;
     get RpmWheel() { return this._RpmWheel; }
+    set RpmWheel(value: number) { this._RpmWheel = value; }
 
     private _RpmEngine = 0;
     get RpmEngine() { return this._RpmEngine; }
+    set RpmEngine(value: number) { this._RpmEngine = value; }
 
     private Pow3(x: number) {
         return x * x * x;

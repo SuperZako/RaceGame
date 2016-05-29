@@ -1,4 +1,5 @@
-﻿/// <reference path="src/body/TestCar.ts"/>
+﻿/// <reference path="src/body/Car3D.ts"/>
+/// <reference path="src/body/CPUCar.ts"/>
 /// <reference path="src/Tracks/Track.ts"/>
 /// <reference path="src/ChaseCamera.ts"/>
 /// <reference path="src/Background.ts"/>
@@ -24,7 +25,8 @@ let backgournd = new Background(scene);
 
 
 let track = new RacingGame.Tracks.Track(scene);
-var testCar = new TestCar(scene, track);
+var testCar = new Car3D(scene, track);
+var cpuCar = new CPUCar(scene, track);
 
 var chaseCamera = new ChaseCamera(testCar._group, new THREE.Vector3(0, -20, 10));//new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); // Define the perspective camera's attributes.
 
@@ -52,6 +54,7 @@ function render() {
 
     var delta = clock.getDelta();
     testCar.Update(delta);
+    cpuCar.Update(delta);
     chaseCamera.Update(delta);
 
     if (right) {

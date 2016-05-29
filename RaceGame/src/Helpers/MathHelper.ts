@@ -1,8 +1,7 @@
 ﻿
 
 namespace MathHelper {
-
-    export const Pi = Math.PI;// 3.141592653589793238463;
+    export const Pi = Math.PI;
     export const PiOver2 = Math.PI / 2;
     export const PiOver4 = Math.PI / 4.0;
     export const TwoPi = 2 * Math.PI;

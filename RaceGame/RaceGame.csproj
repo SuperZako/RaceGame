@@ -25,7 +25,6 @@
     <Content Include="app.css" />
     <Content Include="build\out.js" />
     <Content Include="index.html" />
-    <Content Include="lib\three\OrbitControls.js" />
     <Content Include="lib\three\three.min.js" />
     <Content Include="textures\grass.jpg" />
     <Content Include="textures\grdrla.jpg" />
@@ -37,8 +36,9 @@
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="src\Background.ts" />
     <TypeScriptCompile Include="src\body\Car2D.ts" />
+    <TypeScriptCompile Include="src\body\CPUCar.ts" />
     <TypeScriptCompile Include="src\body\Formula1Car2D.ts" />
-    <TypeScriptCompile Include="src\body\TestCar.ts" />
+    <TypeScriptCompile Include="src\body\Car3D.ts" />
     <TypeScriptCompile Include="src\ChaseCamera.ts" />
     <TypeScriptCompile Include="src\Helpers\MathHelper.ts" />
     <TypeScriptCompile Include="src\Helpers\Vector3D.ts" />
@@ -58,9 +58,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\geometry\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
