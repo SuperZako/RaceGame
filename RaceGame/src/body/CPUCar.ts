@@ -1,15 +1,12 @@
 ﻿/// <reference path="Car3D.ts"/>
 
-
 class CPUCar extends Car3D {
-
-
     constructor(scene: THREE.Scene, track: RacingGame.Tracks.Track) {
         super(scene, track);
     }
 
     public Update(dt: number) {
-        let point = this.track.nextPoint(this._group.position.x, this._group.position.y);
+        let point = this.track.nextPoint(this._group.position.x, this._group.position.y, this._group.position.z);
 
         let x = (point.x - this._group.position.x);
         let y = (point.y - this._group.position.y);
@@ -30,9 +27,6 @@ class CPUCar extends Car3D {
             //    this.SteerAngle *= 0.5;
         }
 
-
-
-
         if (this.IsFrontSlipping || this.IsRearSlipping) {
             this.Brake = 1;
             this.Throttle = 0.0;
@@ -50,7 +44,5 @@ class CPUCar extends Car3D {
         } 
 
         super.Update(dt);
-
-
     }
 }

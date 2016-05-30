@@ -19,16 +19,35 @@ class Vector3D {
         return x * x + y * y + z * z;
     }
 
-    static Distance(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number) {
-        let x = x1 - x2;
-        let y = y1 - y2;
-        let z = z1 - z2;
+    static Distance(vector1: IVector3D, vector2: IVector3D) {
+        let x = vector1.x - vector2.x;
+        let y = vector1.y - vector2.y;
+        let z = vector1.z - vector2.z;
         return this.Length({ x, y, z });
     }
 
     static Dot(vector1: IVector3D, vector2: IVector3D) {
         return vector1.x * vector2.x + vector1.y * vector2.y + vector1.z * vector2.z;
     }
+
+    static Normalize(vector: IVector3D) {
+        let length = this.Length(vector);
+        vector.x /= length;
+        vector.y /= length;
+        vector.z /= length;
+    }
+
+    //static ProjectOnVector(vector1: IVector3D, vector2: IVector3D) {
+
+    //    let v = { x: vector.x, y: vector.y, z: vector.z, };
+
+    //    this.Normalize(vector);
+
+    //    let dot = this.Dot(vector);
+
+    //    return this.copy(v1).multiplyScalar(dot);
+
+    //}
 
     static GetAngleBetweenVectors(vector1: IVector3D, vector2: IVector3D) {
         // See http://en.wikipedia.org/wiki/Vector_(spatial)

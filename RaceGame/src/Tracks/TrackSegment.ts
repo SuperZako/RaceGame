@@ -16,10 +16,10 @@ namespace RacingGame.Tracks {
         }
 
         constructor(private start: TrackVertex, private end: TrackVertex) {
-            this.line = new THREE.Line3(start.pos.clone(), end.pos.clone());
-            this.pos = start.pos.clone().add(end.pos).multiplyScalar(0.5);
+            this.line = new THREE.Line3(start.Position.clone(), end.Position.clone());
+            this.pos = start.Position.clone().add(end.Position).multiplyScalar(0.5);
             this.delta = this.line.delta();
-            this.angle = Math.atan2(end.pos.y - start.pos.y, end.pos.x - start.pos.x);
+            this.angle = Math.atan2(end.Position.y - start.Position.y, end.Position.x - start.Position.x);
 
 
             //var geometry = new THREE.Geometry();

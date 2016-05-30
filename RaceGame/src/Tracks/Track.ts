@@ -5,7 +5,7 @@ namespace RacingGame.Tracks {
 
         public get StartPosition() {
             //return this.splinePath.getPoint(0);
-            return this.points[0].pos;
+            return this.points[0].Position;
         }
 
         constructor(scene: THREE.Scene) {
@@ -22,7 +22,7 @@ namespace RacingGame.Tracks {
             let segments = this.segments;
             let index = -1;
             for (let i = 0; i < segments.length; ++i) {
-                let distance = Vector3D.Distance(segments[i].pos.x, segments[i].pos.y, segments[i].pos.z, x, y, z);
+                let distance = Vector3D.Distance({ x: segments[i].pos.x, y: segments[i].pos.y, z: segments[i].pos.z }, { x, y, z });
                 if (distance < maxDistance) {
                     index = i;
                     maxDistance = distance;
@@ -84,15 +84,15 @@ namespace RacingGame.Tracks {
 
 
         //ApplyGravityAndCheckForCollisions
-        public nextPoint(x: number, y: number) {
+        public nextPoint(x: number, y: number, z: number) {
             let maxDistance = Number.MAX_VALUE;
             let points = this.points;
             let index = -1;
             for (let i = 0; i < points.length; ++i) {
                 let point = points[i];
-                let dX = point.pos.x - x;
-                let dY = point.pos.y - y;
-                let distance = Math.sqrt(dX * dX + dY * dY);
+                let dX = point.Position.x - x;
+                let dY = point.Position.y - y;
+                let distance = Vector3D.Distance({ x: point.Position.x, y: point.Position.y, z: point.Position.z }, { x, y, z });
                 if (distance < 50) {
                     continue;
                 }
@@ -106,7 +106,7 @@ namespace RacingGame.Tracks {
                 }
             }
 
-            return points[index].pos;
+            return points[index].Position;
         }
     }
 }

@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="src\AdventureGame.ts" />
     <TypeScriptCompile Include="src\Background.ts" />
     <TypeScriptCompile Include="src\body\Car2D.ts" />
     <TypeScriptCompile Include="src\body\CPUCar.ts" />

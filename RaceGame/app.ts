@@ -33,7 +33,7 @@ var chaseCamera = new ChaseCamera(testCar._group, new THREE.Vector3(0, -20, 10))
 // スポットライト
 let _spot = new THREE.SpotLight(0xFFFFFF, 2, 3000, Math.PI / 1, 20);
 _spot.position.set(0, 0, 2000);
-//_spot.castShadow = true;
+_spot.castShadow = true;
 _spot.target = testCar._group;
 //if (IS_DEBUG_MODE) _spot.shadowCameraVisible = true;
 scene.add(_spot);
@@ -117,6 +117,7 @@ document.onkeyup = function (e) {
             break;//return false;
     }
 };
+
 
 
 

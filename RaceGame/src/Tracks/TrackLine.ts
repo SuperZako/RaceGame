@@ -84,7 +84,7 @@ namespace RacingGame.Tracks {
 
             let vertices2: THREE.Vector3[] = [];
             for (let point of this.points) {
-                vertices2.push(point.pos.clone().add(point.right.clone().multiplyScalar(20)));
+                vertices2.push(point.Position.clone().add(point.right.clone().multiplyScalar(20)));
             }
             let path = new THREE.CatmullRomCurve3(vertices2);
             (<any>path).closed = true;
@@ -106,7 +106,7 @@ namespace RacingGame.Tracks {
 
             let vertices3: THREE.Vector3[] = [];
             for (let point of this.points) {
-                vertices3.push(point.pos.clone().add(point.right.clone().multiplyScalar(-20)));
+                vertices3.push(point.Position.clone().add(point.right.clone().multiplyScalar(-20)));
             }
             let path2 = new THREE.CatmullRomCurve3(vertices3);
             (<any>path2).closed = true;
@@ -158,6 +158,7 @@ namespace RacingGame.Tracks {
                 })
             );
             scene.add(param);
+
             //----------------------------------------------------------------
             length = left.vertices.length;
             i = 0;
