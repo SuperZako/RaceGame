@@ -92,7 +92,7 @@ namespace RacingGame.Tracks {
             let right = new THREE.Geometry();
 
 
-            for (let point of path.getPoints(5000)) {
+            for (let point of path.getPoints(50)) {
                 right.vertices.push(point);
             }
 
@@ -114,7 +114,7 @@ namespace RacingGame.Tracks {
             let left = new THREE.Geometry();
             let leftTop = new THREE.Geometry();
 
-            for (let point of path2.getPoints(5000)) {
+            for (let point of path2.getPoints(50)) {
                 left.vertices.push(point);
                 leftTop.vertices.push(new THREE.Vector3(point.x, point.y, point.z + 3));
             }
