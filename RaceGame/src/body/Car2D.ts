@@ -218,19 +218,19 @@ class Car2D {
         let zero5 = { x: 0, y: 0 };//= new THREE.Vector2();//Vector2.Zero;
         zero5.x = zero1.x + Math.sin(this.SteerAngle) * zero2.x + zero3.x + zero4.x;
         zero5.y = zero1.y + Math.cos(this.SteerAngle) * zero2.y + zero3.y + zero4.y;
-        let num15 = this.VelocityLocal.x >= this.WheelBase * 8.0 ? (this.FrontAxleDistance * zero2.y - this.RearAxleDistance * zero3.y) : (0.5 * zero2.y - 0.5 * zero3.y);
+        let torque = this.VelocityLocal.x >= this.WheelBase * 8.0 ? (this.FrontAxleDistance * zero2.y - this.RearAxleDistance * zero3.y) : (0.5 * zero2.y - 0.5 * zero3.y);
         //this.AccelerationLocal = zero5 / this.Mass;
         //this.AccelerationLocal = zero5.divideScalar(this.Mass);
         this.AccelerationLocal.x = zero5.x / this.Mass;
         this.AccelerationLocal.y = zero5.y / this.Mass;
-        let num16 = num15 / this.Inertia;
+        let angularAcceleration = torque / this.Inertia;
         this.AccelerationWorld.x = (cos * this.AccelerationLocal.y + sin * this.AccelerationLocal.x);
         this.AccelerationWorld.y = (- sin * this.AccelerationLocal.y + cos * this.AccelerationLocal.x);
 
 
         //this.VelocityWorld += this.AccelerationWorld * dt;
         this.VelocityWorld.addScaledVector(this.AccelerationWorld, dt);
-        this.AngularVelocity += num16 * dt;
+        this.AngularVelocity += angularAcceleration * dt;
         this.Angle += this.AngularVelocity * dt;
 
         //this.Position += this.VelocityWorld * dt;
